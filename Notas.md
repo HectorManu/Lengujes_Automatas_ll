@@ -7,3 +7,14 @@ Sintaxis | Ejemplo
 --- | ---
 ----|----
 
+## 09/02/2023
+
+Lo que el programa debe de hacer es: 
+
+Código: 
+
+Lexema | Tipo
+--- | ---
+int | hola
+
+
