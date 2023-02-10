@@ -51,4 +51,15 @@ hola | int
 perro | int
 loco | int
 
+Se realizó una versión mejorada del código anterior
+
+```python
+import re
+
+palabra = 'CHA_RA'
+
+expresion = re.compile('CH[0-9A-Z_]*RA$')
+
+print(expresion.match(palabra))
+```
 
