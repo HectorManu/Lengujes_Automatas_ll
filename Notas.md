@@ -89,3 +89,6 @@ cada fase de n compiladore maneja diferente tipos de errores
 ### Ejemplo
 
 ### Actividad
+
+
+**Nota**: las reglas para caracter 
