@@ -63,3 +63,29 @@ expresion = re.compile('CH[0-9A-Z_]*RA$')
 print(expresion.match(palabra))
 ```
 
+
+## 14/02/2023
+
+el día de hoy vamos a ver cómo está el manejo de errores
+
+cada fase de n compiladore maneja diferente tipos de errores 
+
+### Manejo de errores
+
+* Fase de ánalisis léxco.
+* Fase de análisis sintáctico
+* Fase de análisis semántico: detecta constucciones que carecen de significacdo para la operación implicita.
+
+### Tipos de errores semánticos
+
+* incompatibilidad de tipos, es aquel eerror que revisa y se genera cuando no se cumplen con as reglas de los tipos de datos en la asgianaciones aritmeticas
+  * Cómo detecta el error?
+    * en latabla de tipos esta esta vacia 
+    * 
+* Indenid la varible, es cuando la variable no esta declarada.
+
+
+
+### Ejemplo
+
+### Actividad
