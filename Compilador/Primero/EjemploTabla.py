@@ -1,7 +1,7 @@
 import tkinter as tk
 
 class Tabla(tk.Frame):
-    def __init__(self, parent, rows=10, columns=2):
+    def __init__(self, parent, rows=800, columns=2):
         tk.Frame.__init__(self, parent)
         self.tabla = []
         for i in range(rows):
