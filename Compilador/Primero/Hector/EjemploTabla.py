@@ -1,7 +1,7 @@
 import tkinter as tk
 
 class Tabla(tk.Frame):
-    def __init__(self, parent, rows=800, columns=2):
+    def __init__(self, parent, rows=10, columns=2):
         tk.Frame.__init__(self, parent)
         self.tabla = []
         for i in range(rows):
@@ -19,11 +19,17 @@ class Tabla(tk.Frame):
     def actualizar_celda(self, fila, columna, texto):
         self.tabla[fila][columna].config(text=texto)
 
+
+
+
+
 root = tk.Tk()
 tabla = Tabla(root)
 tabla.pack(side="top", fill="both", expand=True)
 
-    
+with open('./datos.txt','r') as archivo:
+    contenido = archivo.read()
+    print(contenido)
 
 tabla.actualizar_celda(0, 0, "Fila 1, Columna 1")
 tabla.actualizar_celda(1, 1, "Fila 2, Columna 2")

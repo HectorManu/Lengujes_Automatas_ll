@@ -1,9 +1,9 @@
-ntr CH1RA;
-van CH2RA;
-echi CH3RA;
+ntr CH1RA ;
+van CH2RA ;
+echi CH3RA ;
 
-CH1RA = 111;
-CH2RA = 1.121;
-CH3RA = "HOLA MUNDO";
+CH1RA = 111 ;
+CH2RA = 1.121 ;
+CH3RA = " HOLA MUNDO " ;
 
-CH2RA = CH1RA + CH2RA;
+CH2RA = CH1RA + CH2RA ;
