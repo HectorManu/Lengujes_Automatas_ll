@@ -27,7 +27,7 @@ root = tk.Tk()
 tabla = Tabla(root)
 tabla.pack(side="top", fill="both", expand=True)
 
-with open('./datos.txt','r') as archivo:
+with open('./datos.txt','') as archivo:
     contenido = archivo.read()
     print(contenido)
 
