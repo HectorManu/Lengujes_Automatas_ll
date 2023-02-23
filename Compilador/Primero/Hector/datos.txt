@@ -1,3 +1,8 @@
-1232465
+with open('archivo.txt', 'r') as archivo:
+    lineas = archivo.readlines()
+    lineas = [linea.strip() for linea in lineas]
+
+print(lineas)
+s
 hector
 a
