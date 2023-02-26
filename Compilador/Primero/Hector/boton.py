@@ -2,37 +2,64 @@ import tkinter as tk
 from tkinter import ttk
 
 class Ventana:
-    def __init__(self):
-        self.ventana = tk.Tk()
+    def __init__(self, master):
+        self.master = master
         
-        self.boton = tk.Button(self.ventana, text='Imprimir tabla de lexemas y tipos de datos', command=self.mostrar_lexematipo)
+        self.boton = tk.Button(self.master, text='Imprimir tabla de lexemas y tipos de datos', command=self.mostrar_lexematipo)
         self.boton.pack(pady=20)
-        
-        self.label_mensaje = tk.Label(self.ventana, text='', font=('Arial', 14))
-        self.label_mensaje.pack()
+
         
     def mostrar_lexematipo(self):
+        
+        # self.boton = tk.Button(self.master, text="Finalizar",command=self.fin)
+        # self.boton.pack(pady=20)
+        self.master.title('Tabla lexemas')
+
+        # # Caracteres a eliminar 
+        coma = ','
+        puntocoma = ';'
+        parentesis1 = '('
+        parentesis2 = ')'
+        corchete1 = '{'
+        corchete2 = '}'
+        saltolinea = '\n'
+        comilla = '"'
+
+        # Abrir archivo para imprimir en tabla
+        with open('./datos.txt', 'r') as f:
+            leyendo = f.read()
+            separando_lineas = leyendo.split(' ')
+            print(leyendo)
+            arreglosinespacios = separando_lineas
+            for i in range(len(arreglosinespacios)):
+                arreglosinespacios[i] = arreglosinespacios[i].replace(coma,'').replace(puntocoma,'').replace(parentesis1,'').replace(parentesis2,'').replace(corchete1,'').replace(corchete2,'').replace(saltolinea,'').replace(comilla,'')
+
+        sinvacio = [elemento for elemento in arreglosinespacios if elemento != ""] #eliminar variables vacias después de eliminar los puntos y comas y corechetes y eso
+        sinrepeticion = set(sinvacio)
+
+        #creando tabla
+        tabla = ttk.Treeview(self.master,columns=('tipo',))
+        tabla.heading('tipo', text='Tipos de datos')
+        tabla.heading('#0',text='Lexemas')
+
+        # Agregar lasinrepeticion as tabla
+        for i, tipo in enumerate(sinrepeticion):
+            tabla.insert('', 'end', text=(tipo.strip(),),values=(tipo.strip(),))
+
+        # Empaquetatabla y mostrar la master
+        tabla.pack(expand=True, fill='both')
         self.boton.destroy()
-        self.boton = tk.Button(self.ventana, text="Finalizar",command=self.fin)
-        self.boton.pack(pady=20)
-
-        self.archivo = open('./datos.txt')
-        self.mensaje = self.archivo.readlines()
-        print(len(self.mensaje))
-        self.archivo.close()
-
-        self.label_mensaje.config(text=self.mensaje)
     
     def fin(self):
-        self.ventana.destroy()
+        self.master.destroy()
         
     def ejecutar(self):
-        self.ventana.mainloop()
+        self.master.mainloop()
 
 
-
-mi_ventana = Ventana()
-mi_ventana.ejecutar()
+raiz = tk.Tk()
+mi_ventana = Ventana(raiz)
+raiz.mainloop()
 
 # import tkinter as tk
 # from tkinter import ttk
