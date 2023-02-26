@@ -1,6 +1,6 @@
 import re
 #p = re.compile(r"""\ACH([0-9]*[A-Z]*_*)RA\Z""")
-palabra = 'CHA_RA'
+# palabra = 'CHA12ARA'
 #m = p.match(palabra)
 
 #if m is None:
@@ -11,6 +11,6 @@ palabra = 'CHA_RA'
 #print(m)
 
 expresion = re.compile('CH[0-9A-Z_]*RA$')
-
+palabra = 'CHRA'
 print(expresion.match(palabra))
 

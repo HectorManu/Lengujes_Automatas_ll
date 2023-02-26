@@ -1,8 +1,9 @@
-with open('archivo.txt', 'r') as archivo:
-    lineas = archivo.readlines()
-    lineas = [linea.strip() for linea in lineas]
+ntr CH1RA ;
+van CH2RA ;
+echi CH3RA ;
 
-print(lineas)
-s
-hector
-a
+CH1RA = 111 ;
+CH2RA = 1.121 ;
+CH3RA = " HOLA MUNDO " ;
+
+CH2RA = CH1RA + CH2RA ;
