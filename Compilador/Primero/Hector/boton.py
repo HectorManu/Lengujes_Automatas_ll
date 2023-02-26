@@ -63,6 +63,9 @@ with open('./datos.txt', 'r') as f:
 
 #es agarrar un if y ver si una linea empieza en ntr y en van y en echi entonces cuando encuentre un ; todas las variables anteriores son ntr y entonces en el lugar donde se encuentre la primera varialbe estara ntr xd y pues así con todas las demás hasta encontrar un ntr nuevo o algo así pero debe recorrerse todo el arreglo de readlines  mm interesante 
 
+with open('./datos.txt','r') as f:
+    arreglolineas = f.readlines()
+    print(arreglolineas)
 
 
 # Crear la ventana
@@ -76,7 +79,7 @@ tabla.heading('#0', text='Lexemas')
 
 # Agregar lasinrepeticion as a la tabla
 for i, tipo in enumerate(sinrepeticion):
-    tabla.insert('', 'end', text=(tipo.strip(),),values=str(i+1))
+    tabla.insert('', 'end', text=(tipo.strip(),),values=(tipo.strip(),))
 
 # Empaquetar la tabla y mostrar la ventana
 tabla.pack(expand=True, fill='both')
