@@ -1,40 +1,56 @@
 import re
-import tkinter as tk
-
-identificadores = re.compile('CH[0-9A-Z_]*RA')
-separadores = re.compile('[(){,};]')
-cadena = '(CH_RA,)'
-print (identificadores.match(cadena))
+from tkinter import *
+from tkinter import ttk
 
 
 
-# Crear la ventana principal
-root = tk.Tk()
+def Lexemas(palabra):
 
-# Crear la tabla
-table = tk.Frame(root)
-table.pack()
+    ident = re.compile('^CH[0-9A-Z_]*RA$')
+    separadores = re.compile('[(){,};]')
+    #oparit = re.compile('^[+-*/%]$')
+    opasig = re.compile('=')
+    retorno = re.compile('return')
+    #datos = re.compile('')
 
-# Crear las dos columnas
-col1 = tk.Label(table, text="Columna 1")
-col1.grid(row=0, column=0)
 
-col2 = tk.Label(table, text="Columna 2")
-col2.grid(row=0, column=1)
 
-# Agregar datos a la tabla
-dato1 = tk.Label(table, text="Dato 1")
-dato1.grid(row=1, column=0)
+    cadena = 'nt]'
+    print(ident.search(cadena))
 
-dato2 = tk.Label(table, text="Dato 2")
-dato2.grid(row=1, column=1)
+def Tipo():
+    print()
 
-dato3 = tk.Label(table, text="Dato 3")
-dato3.grid(row=2, column=0)
 
-dato4 = tk.Label(table, text="Dato 4")
-dato4.grid(row=2, column=1)
+def Panel():
+    ventana = Tk()
+    ventana.title('Lexemas')
+    ventana.geometry('400x300')
+    ventana['bg'] = '#fb0'
 
-# Iniciar el loop principal de la ventana
-root.mainloop()
-#if (len(separadores.findall(cadena))) > 1:
+    tv = ttk.Treeview(ventana, columns=("col1"))
+
+    tv.column("#0", width=150)
+    tv.column("col1", width=150, anchor=CENTER)
+
+    tv.heading("#0", text="Lexema", anchor=CENTER)
+    tv.heading("col1", text="Tipo", anchor=CENTER)
+
+    tv.insert("", END, text="INT", values=("INT"))
+
+    tv.pack()
+    ventana.mainloop()
+
+palabras=[]
+try:
+    archivo = open("Codigo.txt","r")
+    for linea in archivo:
+        palabras.extend(linea.split())
+        for palabra in palabras:
+            print(palabras)
+except FileNotFoundError:
+    print("no encontrado")
+except PermissionError:
+    print("No permisos")
+except:
+    print("Ocurrio un error")
