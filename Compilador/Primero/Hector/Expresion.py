@@ -12,5 +12,6 @@ import re
 
 expresion = re.compile('CH[0-9A-Z_]*RA$')
 palabra = 'CHRA'
+print(type(palabra))
 print(expresion.match(palabra))
 
