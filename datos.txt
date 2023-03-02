@@ -2,12 +2,12 @@ ntr CH2RA , CH11RA ;
 van CH1RA , CH4RA ;
 echi CH5RA , CH6RA ;
 CH2RA = "hola2" ;
-van Funcion ( van CH10RA ) {
-    CH10RA = 121 ;
-    ntr CH14RA = CH2RA + CH10RA ;
-    return CH5RA;
+ntr Funcion ( echi CH10RA ) {
+CH10RA = 121 ;
+ntr CH14RA = CH2RA + CH10RA ;
+return CH5RA;
 }
 echi CHCADENARA = 1 ;
-CH1RA = 12 + "hola" ;
+CH1RA = 121 ;
 CH4RA = 1.1591 + CH11RA ;
-CH11RA = Funcion ( CH15651RA ) ;
+CH1RA = Funcion ( CH11RA ) ;
