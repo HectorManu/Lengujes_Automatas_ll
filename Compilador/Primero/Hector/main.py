@@ -148,12 +148,12 @@ class Ventana:
         self.linea = []
         self.descripcion = []
         lineasanalizar = []
-        funcion = []
+        self.funcion = []
         invocacion = []
         retorno = []
         arreglo = self.arreglosinespacios
         arreglo2 = arreglo
-        expresionfunciones = re.compile('[A-Z][A-Za-z0-9]*')
+        expresionnciones = re.compile('[A-Z][A-Za-z0-9]*')
         
 
         # Limpieza de datos
@@ -183,28 +183,29 @@ class Ventana:
                     invocacion.append(arreglo[i+2])
                     invocacion.append(arreglo[i+3])
                 else:
-                    funcion.append(arreglo[i-2])
-                    funcion.append(arreglo[i-1])
-                    funcion.append(arreglo[i])
-                    funcion.append(arreglo[i+1])
-                    funcion.append(arreglo[i+2])
-                    funcion.append(arreglo[i+3])
+                    self.funcion.append(arreglo[i-2])
+                    self.funcion.append(arreglo[i-1])
+                    self.funcion.append(arreglo[i])
+                    self.funcion.append(arreglo[i+1])
+                    self.funcion.append(arreglo[i+2])
+                    self.funcion.append(arreglo[i+3])
             if arreglo[i] == 'return':
-                retorno.append(arreglo[i+1])
+                self.funcion.append(arreglo[i])
+                self.funcion.append(arreglo[i+1])
                                 
 
-        for i in range(len(funcion)):
-            if funcion[i] == '(':
-                if funcion[i-2] == 'ntr':
-                    self.enteros.append(funcion[i-1])
-                elif funcion[i-2] == 'van':
-                    self.reales.append(funcion[i-1])
-                elif funcion[i-2] == 'echi':
-                    self.cadenas.append(funcion[i-1])
+        for i in range(len(self.funcion)):
+            if self.funcion[i] == '(':
+                if self.funcion[i-2] == 'ntr':
+                    self.enteros.append(self.funcion[i-1])
+                elif self.funcion[i-2] == 'van':
+                    self.reales.append(self.funcion[i-1])
+                elif self.funcion[i-2] == 'echi':
+                    self.cadenas.append(self.funcion[i-1])
                 else:
                     tokenerror.append('1')
-                    lexema.append(funcion[i-1])
-                    self.linea.append(self.idenlinea((funcion[i-2]+' '+funcion[i-1])))
+                    lexema.append(self.funcion[i-1])
+                    self.linea.append(self.idenlinea((self.funcion[i-2]+' '+self.funcion[i-1])))
                     self.descripcion.append(self.idendescripcion('funcionindefinida'))
                     
         
@@ -212,28 +213,128 @@ class Ventana:
             if invocacion[i] == '=':
                 if 'ntr' == self.identype(invocacion[i-1]):
                     if 'ntr' == self.identype(invocacion[i+1]):
-                        print('es ntr')
-                        for g in range(len(retorno)):
-                            if self.identype(retorno[g])=='ntr':
-                                print(retorno[g])
+                        # CHRA =                  Funcion (          CHRA               )
+                        error = self.invocacionmetodo(invocacion[i+1],invocacion[i+3])
+                        if error == 'ntr':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+3])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('ntr'))
+                            print('ntr')    
+                        elif error == 'van':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+3])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('van'))
+                            print('van')
+                        elif error == 'echi':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+3])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('echi'))
+                            print('echi')
+                        elif error == 'indefinida':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+3])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('indefinida'))
+                            print('indefinida')
+                        else:
+                            print(error+'linea 243')
                     elif 'van' == self.identype(invocacion[i+1]) or 'echi' == self.identype(invocacion[i+1]):
                         print('no es ntr')
                         tokenerror.append('1')
                         lexema.append(invocacion[i-1])
-                        self.linea.append(self.idenlinea((' = '+invocacion[i-1])))
-                        self.descripcion.append(self.idendescripcion('ntr'))
+                        self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                        self.descripcion.append(self.idendescripcion('indefinida'))
                     else:
                         tokenerror.append('1')
                         lexema.append(invocacion[i-1])
                         self.linea.append(self.idenlinea((' = '+invocacion[i-1])))
                         self.descripcion.append(self.idendescripcion('ntr'))
-                # elif 'van' == self.identype(invocacion[i-1]):
-                #     if 'van' == self.identype(invocacion[i+1]):
-
-            
+                elif 'van' == self.identype(invocacion[i-1]):
+                    if 'van' == self.identype(invocacion[i+1]) or 'ntr' == self.identype(invocacion[i+1]):
+                        # CHRA =                  Funcion (          CHRA               )
+                        error = self.invocacionmetodo(invocacion[i+1],invocacion[i+3])
+                        if error == 'ntr':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+1])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('ntr'))
+                            print('ntr')    
+                        elif error == 'van':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+1])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('van'))
+                            print('van')
+                        elif error == 'echi':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+1])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('echi'))
+                            print('echi')
+                        elif error == 'indefinida':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+1])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('indefinida'))
+                            print('indefinida')
+                        else:
+                            print(error+'linea 243')
+                    elif 'echi' == self.identype(invocacion[i+1]):
+                        tokenerror.append('1')
+                        lexema.append(invocacion[i-1])
+                        self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                        self.linea.append(self.idenlinea((' = '+invocacion[i-1])))
+                        self.descripcion.append(self.idendescripcion('van'))
+                    else:
+                        tokenerror.append('1')
+                        lexema.append(invocacion[i-1])
+                        self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                        self.descripcion.append(self.idendescripcion('indefinida'))
+                elif 'echi' == self.identype(invocacion[i-1]):
+                    if 'echi' == self.identype(invocacion[i+1]):
+                        # CHRA =                  Funcion (          CHRA               )
+                        error = self.invocacionmetodo(invocacion[i+1],invocacion[i+3])
+                        if error == 'ntr':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+1])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('ntr'))
+                            print('ntr')    
+                        elif error == 'van':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+1])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('van'))
+                            print('van')
+                        elif error == 'echi':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+1])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('echi'))
+                            print('echi')
+                        elif error == 'indefinida':
+                            tokenerror.append('1')
+                            lexema.append(invocacion[i+1])
+                            self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                            self.descripcion.append(self.idendescripcion('indefinida'))
+                            print('indefinida')
+                        else:
+                            print(error+'linea 243')
+                    elif 'van' == self.identype(invocacion[i+1]) or 'ntr' == self.identype(invocacion[i+1]):
+                        tokenerror.append('1')
+                        lexema.append(invocacion[i-1])
+                        self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                        self.linea.append(self.idenlinea((' = '+invocacion[i-1])))
+                        self.descripcion.append(self.idendescripcion('echi'))
+                    else:
+                        tokenerror.append('1')
+                        lexema.append(invocacion[i-1])
+                        self.linea.append(self.idenlinea((invocacion[i-1]+' '+invocacion[i])))
+                        self.descripcion.append(self.idendescripcion('indefinida'))
                         
-
-
         
         for i in range(len(lineasanalizar)):
             if lineasanalizar[i] == '=':
@@ -345,6 +446,37 @@ class Ventana:
         tabla.pack(expand=True, fill='both')
         
     
+    def invocacionmetodo(self,uno,dos):
+        for i in range(len(self.funcion)):
+            if uno in self.funcion[i]:
+                # Funcion ( int entrada )
+                entrada = self.funcion[i+3]
+                if self.identype(entrada) == 'ntr':
+                    if self.identype(dos ) == 'ntr':
+                        return('Es correcto')
+                    elif self.identype(dos) == 'van' or self.identype(dos) == 'echi':
+                        return('ntr')
+                    else:
+                        return('indefinida')
+                elif self.identype(entrada) == 'van':
+                    if self.identype(dos) == 'van' or self.identype(dos) == 'ntr':
+                        return('Correcto')
+                    elif self.identype(dos) == 'echi':
+                        return('van')
+                    else:
+                        return('indefinida')
+                elif self.identype(entrada) == 'echi':
+                    if self.identype(dos) == 'echi':
+                        return('Correcto')
+                    elif self.identype(dos) == 'van' or self.identype(dos) == 'ntr':
+                        return('echi')
+                    else:
+                        return('indefinida')
+        
+                    
+
+        
+
     def idendescripcion(self,tipo):
         if tipo == 'indefinida':
             return('Variable indefinida')
