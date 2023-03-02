@@ -61,6 +61,9 @@ class Ventana:
 
         # Configurando ancho de columna
         tabla.column('#0', width=0)
+        tabla.column('tipo',anchor='center')
+        tabla.column('lexema',anchor='center')
+        tabla.column('valor',anchor='center')
 
         # Empaquetatabla y mostrar la master
         tabla.pack(expand=True, fill='both')
@@ -142,10 +145,12 @@ class Ventana:
     def identificar_errores(self):
         tokenerror = []
         lexema = []
-        linea = []
-        descripcion = []
+        self.linea = []
+        self.descripcion = []
         lineasanalizar = []
+        funcion = []
         arreglo = self.arreglosinespacios
+        
 
         # Limpieza de datos
         arreglo = [elemento for elemento in arreglo if elemento != ',']
@@ -155,6 +160,7 @@ class Ventana:
         # Identificando las lineas en las cuales hay un = de asignación y un parentesis 
         
         for i in range(len(arreglo)):
+            
             if arreglo[i] == '=':
                 lineasanalizar.append(arreglo[i-1])
                 for s in range(len(arreglo)):
@@ -163,23 +169,105 @@ class Ventana:
                     if arreglo[s] == ';':
                         break
         
+        
+        for i in range(len(arreglo)):
+            if arreglo[i] == '(':
+                funcion.append(arreglo[i-2])
+                funcion.append(arreglo[i-1])
+                for s in range(len(arreglo)):
+                    s += i
+                    funcion.append(arreglo[s])
+                    if arreglo[s] == '\n':
+                        break
+            if arreglo[i] == 'return':
+                funcion.append(arreglo[i])
+                for k in range(len(arreglo)):
+                    k += i
+                    funcion.append(arreglo[k+1])
+                    if arreglo[k] == '\n':
+                        break
+        
         for i in range(len(lineasanalizar)):
             if lineasanalizar[i] == '=':
                 self.envio = lineasanalizar[i-1]
                 tipo = self.identype(self.envio)
                 if tipo == 'ntr':
-                    print('es un ntr xd')
-                    # for s in range(len(lineasanalizar)):
-                    #     s = i + 1
-                    #     print(lineasanalizar[s])
+                    operando = self.identype(lineasanalizar[i+1])
+                    if operando == 'ntr':
+                        if lineasanalizar[i+3] == ';':
+                            break
+                        else: 
+                            operando2 = self.identype(lineasanalizar[i+3])
+                            if operando2 == 'ntr':
+                                print('ntr = ntr + ntr')
+                            else:
+                                tokenerror.append('1')
+                                lexema.append(lineasanalizar[i+3])
+                                idlinea = lineasanalizar[i+3] + ' '+lineasanalizar[i+4]
+                                self.linea.append(self.idenlinea(idlinea))
+                                self.descripcion.append(self.idendescripcion(tipo))
+
+                            # if simbolo == '+' or simbolo == '-':
+                    else:
+                        tokenerror.append('1')
+                        lexema.append(lineasanalizar[i+1])
+                        idlinea = lineasanalizar[i+1]+' '+lineasanalizar[i+2]
+                        self.linea.append(self.idenlinea(idlinea))
+                        self.descripcion.append(self.idendescripcion(tipo))
                 if tipo == 'van':
-                    print('es un van')
+                    operando = self.identype(lineasanalizar[i+1])
+                    if operando == 'van' or operando == 'ntr':
+                        if lineasanalizar[i+3] == ';':
+                            break
+                        else: 
+                            operando2 = self.identype(lineasanalizar[i+3])
+                            if operando2 == 'van' or operando == 'ntr':
+                                print('van = van + van')
+                            else:
+                                tokenerror.append('1')
+                                lexema.append(lineasanalizar[i+3])
+                                idlinea = lineasanalizar[i+3] + ' '+lineasanalizar[i+4]
+                                self.linea.append(self.idenlinea(idlinea))
+                                self.descripcion.append(self.idendescripcion(tipo))
+
+                            # if simbolo == '+' or simbolo == '-':
+                    else:
+                        tokenerror.append('1')
+                        lexema.append(lineasanalizar[i+1])
+                        idlinea = lineasanalizar[i+1]+' '+lineasanalizar[i+2]
+                        self.linea.append(self.idenlinea(idlinea))
+                        self.descripcion.append(self.idendescripcion(tipo))
                 if tipo == 'echi':
-                    print('es un echi')
+                    operando = self.identype(lineasanalizar[i+1])
+                    if operando == 'echi':
+                        if lineasanalizar[i+3] == ';':
+                            break
+                        else: 
+                            operando2 = self.identype(lineasanalizar[i+3])
+                            if operando2 == 'echi':
+                                print('echi = echi + echi')
+                            else:
+                                tokenerror.append('1')
+                                lexema.append(lineasanalizar[i+3])
+                                idlinea = lineasanalizar[i+3] + ' '+lineasanalizar[i+4]
+                                self.linea.append(self.idenlinea(idlinea))
+                                self.descripcion.append(self.idendescripcion(tipo))
+
+                            # if simbolo == '+' or simbolo == '-':
+                    else:
+                        tokenerror.append('1')
+                        lexema.append(lineasanalizar[i+1])
+                        idlinea = lineasanalizar[i+1]+' '+lineasanalizar[i+2]
+                        self.linea.append(self.idenlinea(idlinea))
+                        self.descripcion.append(self.idendescripcion(tipo))
                 if tipo == 'indefinida':
-                    print('indefinida prro')
-
-
+                    tokenerror.append('1')
+                    lexema.append(self.envio)
+                    self.linea.append(self.idenlinea(self.envio))
+                    self.descripcion.append(self.idendescripcion(tipo))
+            
+        
+        
         # Imprimir Tabla
 
         segunda_ventana = tk.Toplevel()
@@ -194,13 +282,50 @@ class Ventana:
         
         # Agregar las inrepeticion as tabla
         for i, tipo in enumerate(lexema):
-            tabla.insert('', 'end', text="ErrSem"+tokenerror[i], values=(tipo.strip(), linea[i].strip(), descripcion[i]))
+            tabla.insert('', 'end', text="ErrSem"+tokenerror[i], values=(tipo.strip(), self.linea[i].strip(), self.descripcion[i]))
+
+        #Configurando las columnas
+        tabla.column('#0',anchor='center')
+        tabla.column('lexema',anchor='center')
+        tabla.column('linea',anchor='center')
+        tabla.column('descripcion',anchor='center')
         
         segunda_ventana.geometry('+800+200')
         
         # Empaquetatabla y mostrar la master
         tabla.pack(expand=True, fill='both')
+        
     
+    def idendescripcion(self,tipo):
+        if tipo == 'indefinida':
+            return('Variable indefinida')
+        if tipo == 'ntr':
+            return('Imcompatibilidad de tipos, ntr')
+        if tipo == 'echi':
+            return('Imcompatibilidad de tipo, echi')
+        if tipo == 'van':
+            return('Imcompatibilidad de dipo, van')
+
+    def idenlinea(self,tipo):
+        tipo = tipo
+        print(tipo)
+        with open('./datos.txt', 'r') as f:
+            leyendo = f.readlines()
+        
+        for i in range(len(leyendo)):
+            if '=' in leyendo[i] or '(' in leyendo[i]:
+                print('=')
+            else:
+                leyendo[i] = ''
+        print(leyendo)
+        for i in leyendo:
+            
+            if tipo in i:
+                tipo = str((leyendo.index(i))+1)
+                return tipo
+    
+
+
     def identype(self,tipo):
 
         for i in range(len(self.enteros)):
