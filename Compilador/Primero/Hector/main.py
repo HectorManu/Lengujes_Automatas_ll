@@ -149,7 +149,11 @@ class Ventana:
         self.descripcion = []
         lineasanalizar = []
         funcion = []
+        invocacion = []
+        retorno = []
         arreglo = self.arreglosinespacios
+        arreglo2 = arreglo
+        expresionfunciones = re.compile('[A-Z][A-Za-z0-9]*')
         
 
         # Limpieza de datos
@@ -160,7 +164,6 @@ class Ventana:
         # Identificando las lineas en las cuales hay un = de asignación y un parentesis 
         
         for i in range(len(arreglo)):
-            
             if arreglo[i] == '=':
                 lineasanalizar.append(arreglo[i-1])
                 for s in range(len(arreglo)):
@@ -169,23 +172,68 @@ class Ventana:
                     if arreglo[s] == ';':
                         break
         
-        
         for i in range(len(arreglo)):
             if arreglo[i] == '(':
-                funcion.append(arreglo[i-2])
-                funcion.append(arreglo[i-1])
-                for s in range(len(arreglo)):
-                    s += i
-                    funcion.append(arreglo[s])
-                    if arreglo[s] == '\n':
-                        break
+                if arreglo[i-2] == '=':
+                    invocacion.append(arreglo[i-3])
+                    invocacion.append(arreglo[i-2])
+                    invocacion.append(arreglo[i-1])
+                    invocacion.append(arreglo[i])
+                    invocacion.append(arreglo[i+1])
+                    invocacion.append(arreglo[i+2])
+                    invocacion.append(arreglo[i+3])
+                else:
+                    funcion.append(arreglo[i-2])
+                    funcion.append(arreglo[i-1])
+                    funcion.append(arreglo[i])
+                    funcion.append(arreglo[i+1])
+                    funcion.append(arreglo[i+2])
+                    funcion.append(arreglo[i+3])
             if arreglo[i] == 'return':
-                funcion.append(arreglo[i])
-                for k in range(len(arreglo)):
-                    k += i
-                    funcion.append(arreglo[k+1])
-                    if arreglo[k] == '\n':
-                        break
+                retorno.append(arreglo[i+1])
+                                
+
+        for i in range(len(funcion)):
+            if funcion[i] == '(':
+                if funcion[i-2] == 'ntr':
+                    self.enteros.append(funcion[i-1])
+                elif funcion[i-2] == 'van':
+                    self.reales.append(funcion[i-1])
+                elif funcion[i-2] == 'echi':
+                    self.cadenas.append(funcion[i-1])
+                else:
+                    tokenerror.append('1')
+                    lexema.append(funcion[i-1])
+                    self.linea.append(self.idenlinea((funcion[i-2]+' '+funcion[i-1])))
+                    self.descripcion.append(self.idendescripcion('funcionindefinida'))
+                    
+        
+        for i in range(len(invocacion)):
+            if invocacion[i] == '=':
+                if 'ntr' == self.identype(invocacion[i-1]):
+                    if 'ntr' == self.identype(invocacion[i+1]):
+                        print('es ntr')
+                        for g in range(len(retorno)):
+                            if self.identype(retorno[g])=='ntr':
+                                print(retorno[g])
+                    elif 'van' == self.identype(invocacion[i+1]) or 'echi' == self.identype(invocacion[i+1]):
+                        print('no es ntr')
+                        tokenerror.append('1')
+                        lexema.append(invocacion[i-1])
+                        self.linea.append(self.idenlinea((' = '+invocacion[i-1])))
+                        self.descripcion.append(self.idendescripcion('ntr'))
+                    else:
+                        tokenerror.append('1')
+                        lexema.append(invocacion[i-1])
+                        self.linea.append(self.idenlinea((' = '+invocacion[i-1])))
+                        self.descripcion.append(self.idendescripcion('ntr'))
+                # elif 'van' == self.identype(invocacion[i-1]):
+                #     if 'van' == self.identype(invocacion[i+1]):
+
+            
+                        
+
+
         
         for i in range(len(lineasanalizar)):
             if lineasanalizar[i] == '=':
@@ -199,7 +247,7 @@ class Ventana:
                         else: 
                             operando2 = self.identype(lineasanalizar[i+3])
                             if operando2 == 'ntr':
-                                print('ntr = ntr + ntr')
+                                print('')
                             else:
                                 tokenerror.append('1')
                                 lexema.append(lineasanalizar[i+3])
@@ -222,7 +270,7 @@ class Ventana:
                         else: 
                             operando2 = self.identype(lineasanalizar[i+3])
                             if operando2 == 'van' or operando == 'ntr':
-                                print('van = van + van')
+                                print('')
                             else:
                                 tokenerror.append('1')
                                 lexema.append(lineasanalizar[i+3])
@@ -282,7 +330,8 @@ class Ventana:
         
         # Agregar las inrepeticion as tabla
         for i, tipo in enumerate(lexema):
-            tabla.insert('', 'end', text="ErrSem"+tokenerror[i], values=(tipo.strip(), self.linea[i].strip(), self.descripcion[i]))
+            tabla.insert('', 'end', text="ErrSem "+str(i+1), values=(tipo.strip(), self.linea[i].strip(), self.descripcion[i]))
+            int(i)
 
         #Configurando las columnas
         tabla.column('#0',anchor='center')
@@ -299,25 +348,31 @@ class Ventana:
     def idendescripcion(self,tipo):
         if tipo == 'indefinida':
             return('Variable indefinida')
-        if tipo == 'ntr':
+        elif tipo == 'ntr':
             return('Imcompatibilidad de tipos, ntr')
-        if tipo == 'echi':
+        elif tipo == 'echi':
             return('Imcompatibilidad de tipo, echi')
-        if tipo == 'van':
+        elif tipo == 'van':
             return('Imcompatibilidad de dipo, van')
+        elif tipo == 'tipofunindefi':
+            return('Tipo de función indefinida')
+        elif tipo == 'nohayreturn':
+            return('No hay return de esta funcion')
+        elif tipo == 'returnincorrectontr':
+            return('Tipo de return no es ntr')
+        elif tipo == 'funcionindefinida':
+            return('Tipo de función indefinita')
 
     def idenlinea(self,tipo):
         tipo = tipo
-        print(tipo)
         with open('./datos.txt', 'r') as f:
             leyendo = f.readlines()
         
         for i in range(len(leyendo)):
             if '=' in leyendo[i] or '(' in leyendo[i]:
-                print('=')
+                leyendo[i] = leyendo[i]
             else:
                 leyendo[i] = ''
-        print(leyendo)
         for i in leyendo:
             
             if tipo in i:
