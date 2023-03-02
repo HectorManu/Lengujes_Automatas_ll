@@ -594,5 +594,5 @@ raiz = tk.Tk()
 #llamamos a la clase y le pasamos el objeto
 mi_ventana = Ventana(raiz)
 
-# ciclo infinito para imprimir la gráfica
+# ciclo infinito para imprimir la gráfica   
 raiz.mainloop()

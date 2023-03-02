@@ -5,10 +5,10 @@ CH2RA = "hola2" ;
 ntr Funcion ( echi CH10RA ) {
 CH10RA = 121 ;
 ntr CH14RA = CH2RA + CH10RA ;
-return CH5RA;
+return CH5RA77 ;
 }
 echi CHCADENARA = 1 ;
 CH1RA = 121 ;
 CH4RA = 1.1591 + CH11RA ;
-CH1RA = Funcion ( CH11RA ) ;
+CH551RA = Funcion ( CH1991RA ) ;
 
