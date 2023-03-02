@@ -1,6 +1,6 @@
-ntr CH2RA , CH11RA , CH33RA ;
-van CH1RA , CH4RA , CH99RA ;
-echi CH5RA , CH6RA , CH100RA ;
+ntr CH2RA , CH11RA ;
+van CH1RA , CH4RA ;
+echi CH5RA , CH6RA ;
 CH2RA = "hola2" ;
 ntr Funcion ( echi CH10RA ) {
 CH10RA = 121 ;
@@ -11,4 +11,3 @@ echi CHCADENARA = 1 ;
 CH1RA = 121 ;
 CH4RA = 1.1591 + CH11RA ;
 CH1RA = Funcion ( CH11RA ) ;
-
