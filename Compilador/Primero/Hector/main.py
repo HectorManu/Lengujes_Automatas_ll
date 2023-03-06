@@ -233,6 +233,7 @@ class Ventana:
                 # en esos arreglos tiene los nombres de las variables
                 # al invocarse nos devuelve el tipo 
                 if 'ntr' == self.identype(self.invocacion[i-1]):
+                    # aquí en en i+1 es igual a analizar el nombre de la función y el tipo que ya debe estar guardado
                     if 'ntr' == self.identype(self.invocacion[i+1]):
                         # CHRA =                  Funcion (          CHRA ,               )
                         # primer uso de self.invocacion metodo
@@ -291,58 +292,13 @@ class Ventana:
                         self.rellenaerrores('1',self.invocacion[i-1],self.idenlinea((' = '+self.invocacion[i-1])),self.idendescripcion('echi'))
                     else:
                         self.rellenaerrores('1',self.invocacion[i-1],self.idenlinea((self.invocacion[i-1]+' '+self.invocacion[i]+' '+self.invocacion[i+1])),self.idendescripcion('indefinida'))
-        # Aqui analizamos si las reglas aritmeticas se cumplen e decir entero = entero + entero 
-        for i in range(len(self.lineasanalizar)):
-            if self.lineasanalizar[i] == '=':
-                self.envio = self.lineasanalizar[i-1]
-                tipo = self.identype(self.envio)
-                if tipo == 'ntr':
-                    operando = self.identype(self.lineasanalizar[i+1])
-                    if operando == 'ntr':
-                        if self.lineasanalizar[i+3] == ';':
-                            break
-                        else: 
-                            operando2 = self.identype(self.lineasanalizar[i+3])
-                            if operando2 == 'ntr':
-                                print('')
-                            else:
-                                self.rellenaerrores('1',self.lineasanalizar[i+3],self.idenlinea((' '+self.lineasanalizar[i+3] + ' '+self.lineasanalizar[i+4])),self.idendescripcion(tipo))
-                            # if simbolo == '+' or simbolo == '-':
-                    else:
-                        self.rellenaerrores('1',self.lineasanalizar[i+1],self.idenlinea((' '+self.lineasanalizar[i+1]+' '+self.lineasanalizar[i+2])),self.idendescripcion(tipo))
-                if tipo == 'van':
-                    operando = self.identype(self.lineasanalizar[i+1])
-                    if operando == 'van' or operando == 'ntr':
-                        if self.lineasanalizar[i+3] == ';':
-                            break
-                        else: 
-                            operando2 = self.identype(self.lineasanalizar[i+3])
-                            if operando2 == 'van' or operando2 == 'ntr':
-                                print('')
-                            else:
-                                self.rellenaerrores('1',self.lineasanalizar[i+3],self.idenlinea((' '+self.lineasanalizar[i+3] + ' '+self.lineasanalizar[i+4])),self.idendescripcion(tipo))
-                            # if simbolo == '+' or simbolo == '-':
-                    else:
-                        self.rellenaerrores('1',self.lineasanalizar[i+1],self.idenlinea((' '+self.lineasanalizar[i+1]+' '+self.lineasanalizar[i+2])),self.idendescripcion(tipo))
-                if tipo == 'echi':
-                    operando = self.identype(self.lineasanalizar[i+1])
-                    if operando == 'echi':
-                        if self.lineasanalizar[i+3] == ';':
-                            break
-                        else: 
-                            operando2 = self.identype(self.lineasanalizar[i+3])
-                            if operando2 == 'echi':
-                                print('echi = echi + echi')
-                            else:
-                                self.rellenaerrores('1',self.lineasanalizar[i+3],self.idenlinea((self.lineasanalizar[i+3] + ' '+self.lineasanalizar[i+4])),self.idendescripcion(tipo))
-                            # if simbolo == '+' or simbolo == '-':
-                    else:
-                        self.rellenaerrores('1',self.lineasanalizar[i+1],self.idenlinea((' '+self.lineasanalizar[i+1]+' '+self.lineasanalizar[i+2])),self.idendescripcion(tipo))
-                if tipo == 'indefinida':
-                    self.rellenaerrores('1',self.envio,self.idenlinea(self.envio),self.idendescripcion(tipo))
+                else:
+                    if 'ntr' == self.identype(self.invocacion[i+1]):
+                        print('en efecto ')
 
+        self.identificandoerroresdos()
         self.imprimirlasegundatabla()
-        
+
     def invocacionmetodo(self,uno,dos):
         # aqui se le mandan dos parámetros el cual es el nombre de la funciion
         # y también se le manda qué es lo que le enviamos cuando 
@@ -468,7 +424,6 @@ class Ventana:
         # Empaquetatabla y mostrar la master
         tabla.pack(expand=True, fill='both')
         self.boton.destroy()  # destuir el boton y dejar nomas la tabla
-        print('Estamos imprimiendo la primera tabla')
 
     def imprimirlasegundatabla(self):
         # Imprimir Tabla
@@ -499,7 +454,57 @@ class Ventana:
         
         # Empaquetatabla y mostrar la master
         tabla.pack(expand=True, fill='both')
-        print('Estamos imprimiendo la segunda tabla')
+
+    def identificandoerroresdos(self):
+        # Aqui analizamos si las reglas aritmeticas se cumplen e decir entero = entero + entero 
+        for i in range(len(self.lineasanalizar)):
+            if self.lineasanalizar[i] == '=':
+                self.envio = self.lineasanalizar[i-1]
+                tipo = self.identype(self.envio)
+                if tipo == 'ntr':
+                    operando = self.identype(self.lineasanalizar[i+1])
+                    if operando == 'ntr':
+                        if self.lineasanalizar[i+3] == ';':
+                            break
+                        else: 
+                            operando2 = self.identype(self.lineasanalizar[i+3])
+                            if operando2 == 'ntr':
+                                print('')
+                            else:
+                                self.rellenaerrores('1',self.lineasanalizar[i+3],self.idenlinea((' '+self.lineasanalizar[i+3] + ' '+self.lineasanalizar[i+4])),self.idendescripcion(tipo))
+                            # if simbolo == '+' or simbolo == '-':
+                    else:
+                        self.rellenaerrores('1',self.lineasanalizar[i+1],self.idenlinea((' '+self.lineasanalizar[i+1]+' '+self.lineasanalizar[i+2])),self.idendescripcion(tipo))
+                if tipo == 'van':
+                    operando = self.identype(self.lineasanalizar[i+1])
+                    if operando == 'van' or operando == 'ntr':
+                        if self.lineasanalizar[i+3] == ';':
+                            break
+                        else: 
+                            operando2 = self.identype(self.lineasanalizar[i+3])
+                            if operando2 == 'van' or operando2 == 'ntr':
+                                print('')
+                            else:
+                                self.rellenaerrores('1',self.lineasanalizar[i+3],self.idenlinea((' '+self.lineasanalizar[i+3] + ' '+self.lineasanalizar[i+4])),self.idendescripcion(tipo))
+                            # if simbolo == '+' or simbolo == '-':
+                    else:
+                        self.rellenaerrores('1',self.lineasanalizar[i+1],self.idenlinea((' '+self.lineasanalizar[i+1]+' '+self.lineasanalizar[i+2])),self.idendescripcion(tipo))
+                if tipo == 'echi':
+                    operando = self.identype(self.lineasanalizar[i+1])
+                    if operando == 'echi':
+                        if self.lineasanalizar[i+3] == ';':
+                            break
+                        else: 
+                            operando2 = self.identype(self.lineasanalizar[i+3])
+                            if operando2 == 'echi':
+                                print('echi = echi + echi')
+                            else:
+                                self.rellenaerrores('1',self.lineasanalizar[i+3],self.idenlinea((self.lineasanalizar[i+3] + ' '+self.lineasanalizar[i+4])),self.idendescripcion(tipo))
+                            # if simbolo == '+' or simbolo == '-':
+                    else:
+                        self.rellenaerrores('1',self.lineasanalizar[i+1],self.idenlinea((' '+self.lineasanalizar[i+1]+' '+self.lineasanalizar[i+2])),self.idendescripcion(tipo))
+                if tipo == 'indefinida':
+                    self.rellenaerrores('1',self.envio,self.idenlinea(self.envio),self.idendescripcion(tipo))
 # raiz es nuestro objeto 
 raiz = tk.Tk()
 

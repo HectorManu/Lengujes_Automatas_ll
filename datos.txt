@@ -10,5 +10,5 @@ return CH5RA77 ;
 echi CHCADENARA = 1 ;
 CH1RA = 121 ;
 CH4RA = 1.1591 + CH11RA ;
-CH551RA = Funcion ( CH1991RA ) ;
+CH551RA = averr ( CH1418919185991RA ) ;
 
