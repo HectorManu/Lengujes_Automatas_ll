@@ -295,6 +295,8 @@ class Ventana:
                 else:
                     if 'ntr' == self.identype(self.invocacion[i+1]):
                         print('en efecto ')
+                    else:
+                        print('en efecto no existe')
 
         self.identificandoerroresdos()
         self.imprimirlasegundatabla()
