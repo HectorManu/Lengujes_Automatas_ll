@@ -342,6 +342,10 @@ class Ventana:
             return('No hay return de esta funcion')
         elif tipo == 'returnincorrectontr':
             return('Tipo de return no es ntr')
+        elif tipo == 'returnincorrectovan':
+            return('Tipo de return no es van')
+        elif tipo == 'returnincorrectoechi':
+            return('Tipo de return no es echi')
         elif tipo == 'funcionindefinida':
             return('Tipo de función indefinita')
 
