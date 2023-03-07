@@ -218,11 +218,6 @@ class Ventana:
                 else:
                     # En caso de que no haya tipo se guarda como un ERROR INDEFINIDO
                     self.rellenaerrores('1',self.funcion[i-1],self.idenlinea((self.funcion[i-2]+' '+self.funcion[i-1])),self.idendescripcion('funcionindefinida'))
-
-                    # self.tokenerror.append('1')
-                    # self.lexema.append(self.funcion[i-1])
-                    # self.linea.append(self.idenlinea((self.funcion[i-2]+' '+self.funcion[i-1])))
-                    # self.descripcion.append(self.idendescripcion('funcionindefinida'))
                     
         # Aqui validamos que cuando se invoque una función como variable = funcion ( variable )
         # se pasen los valores correctos que recibe la variable 
