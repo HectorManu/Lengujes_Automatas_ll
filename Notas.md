@@ -162,3 +162,107 @@ CH1RA = CH2RA + CH3RA
 
 
 
+
+
+
+## 07/03/2023
+
+### Unidad 2
+
+#### Generación de Codigo intermedio
+tomar el código de entrrada y se empieza a transformar
+
+**objetivo** conocer las técnicas de conversión entre notaciones, así como las técnica para rrepresenetar las intrucciones de un lenguajed e alto nivel en código intermedio.
+
+- Aplicar los tipos de notaciones para la conversión de expresiones, infija prefija y posfija
+- Representar expresiones mediane el código intemrdio
+- Reconocer el manejo de tipos de expresiones y el uso de operadores
+- Desarrollar las accioens que represeenten la estructura
+
+
+**Estrategias**
+- Exponer los 
+
+**Cómo traducir las instrucciones a un lenguaje ensamblador**
+
+Código intermedio realiza algunas reducciones que le permiten actuar de manerea más automatizada sin riesgos de la tradiccion no se concrete como es debido
+
+**Notaciones**
+
+- prefija 
+  - Esun algoritmo inductiva 
+  - L expresión aritmética X+10 a notción prefida es 
+    - +X10
+  - Ejemplo
+    - 9*4/8
+    - *94 /8
+    - /*94
+  - Ejemplo 2
+    - 9*3+3-2/8
+    - Anotación prefija es:
+    - *96 +3 -2 /8
+    - *96 +3 -/28
+    - +*963-/28
+    - -+*963/28
+- Posfija
+  - ejemplo 
+    - (9-5)*2
+    - 95-*2
+    - 95-2*
+  - ejemplo 3-8*6+7
+    - 3-86*+7
+    - 38 6*-+7
+    - 386*-7+
+  - Ejemplo (5+6)*(7+8)
+    - 56+*(7+8)
+
+#### Ejercicio
+1. 2+8*2/3
+   - Prefijo
+     - 2+*82/3
+     - 2+/*823
+     - +2/*823
+   - Posfijo
+     - 2+82*/3
+     - 2+82*3/
+     -  282*3/+
+2. 6+6/5+6
+   -  Prefijo
+      -  6+/65+6
+      -  +6/65+6
+      -  ++6/656
+   -  Posfijo
+      -  6+65/+6
+      -  665/++6
+      -  665/+6+
+      -  665/+6+
+3. 3-5+8*2
+   - Prefijo
+      - 3-5+*82
+      - -35+*82
+      - +-35*82
+    - Posfijo
+      - 35-82*+
+4. 6+5/4+3
+   - Prefijo
+      - 6+/54+3
+      - +6/54+3
+      - ++6/543
+    - Posfijo
+      - 654/+3+
+5. 7-9/1+0
+   - Prefijo
+      - 7-/91+0
+      - -7/91+0
+      - +-7/910
+    - Posfijo
+      - 791/-0+
+  
+
+### Cómo lo hace el compilador
+- Definiciones direigidas por la sintaxis
+  - Atributos sintetizados
+    - En un nodo se calcula a partir de los valores de los atribuos de los hijos de dichos nodo en el árbol de análisis sintáctico.
+    - 
+  - Atributos Heredados
+    - Se calcula a partir de los valores de los atribuos en los hermanos y el padre de dicho nodo.
