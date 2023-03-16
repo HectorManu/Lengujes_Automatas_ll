@@ -1,4 +1,5 @@
 # Notas
+# Unidad 1
 ## 07/02/2023
 
 Operaón de las asignaciones la utilizaremos para evaluar el sintaxis y las reglas 
@@ -167,7 +168,7 @@ CH1RA = CH2RA + CH3RA
 
 ## 07/03/2023
 
-### Unidad 2
+# Unidad 2
 
 #### Generación de Codigo intermedio
 tomar el código de entrrada y se empieza a transformar
@@ -266,3 +267,129 @@ Código intermedio realiza algunas reducciones que le permiten actuar de manerea
     - 
   - Atributos Heredados
     - Se calcula a partir de los valores de los atribuos en los hermanos y el padre de dicho nodo.
+
+## 16/03/2023
+
+Representación de código intermeido
+
+Las 3 represetaciones de código intemedio 
+- códito p
+  - Técnicas que usan los interpretes 
+- triplos 
+  - es una estructura de datos que representa la perspectiva lógica de la generación de un código intemmedio basada en operandos y operadores, para genera **operaciones temporales** qe, en conjunto, forman una operación ocmpueta. 
+  - La operaciones temporales se almacenan en tabla símbolos con tres columnas.
+<center>
+
+``` python
+w = x + y + 24 -z
+
+MOV AX,X
+ADD AX,Y
+ADD AX,24
+SUB AX,z
+MOV W,AX
+```
+
+**NOTTA**: la columna de movimientos no va normalmente solo las otras 3 los movimientos solo es una explicación de lo que va en las tablas.
+</center>
+
+- Ejemplos
+  - posfijo wxy+24+z-=
+  
+<center>
+
+Movimientos | Datos objeto | Dato fuente | Operador
+--- | --- | --- | ---
+T | T1 | x | =
+T | T1 | y | +
+T | T1 | 24 | +
+T | T1 | z | -
+T | w | T1 | =
+
+</center>
+
+- Ejemplo 2
+  - W = x+y/24
+  - 
+
+Movimientos | Datos objeto | Dato fuente | Operador
+--- | --- | --- | ---
+T1 = y | T1 | y | =
+T1 = T1 / 24 | T1 | 24 | /
+T2 | T2 | x | +
+T1 | T1 | T2 | -
+T | w | T1 | =
+
+
+- cuadrulos
+  - Otra estructura de datos que tiene 4 objetos 
+  - Encabezados
+    - Dato objeto
+    - Dato fuente 1 
+    - Dato fuente 2 
+    - Operador 
+
+
+### Ejercicios
+
+1. b = j - a * 20 / k
+- |. En triplo en notación prefijo y posfijo 
+   - Prefijo
+     - b = j - *a20 / k
+     - b = j - /*a20k
+     - b = -j/*a20k
+     - =b-j/*a20k
+
+      <center>
+
+      Movimientos | Operador | Datos objeto | Dato fuente 
+      --- | --- | --- | ---
+      T1 = a  | = | T1 | a
+      T1 * 20 | * | T1 | 20
+      T1 / k | / | T1 | k
+      T2 = j | = | T2 | j
+      T2 - T1 | - | T2 | T1
+      b = T2 | = | b | T2
+
+      </center>
+
+   - Posfijo
+     - b = j - a20* / k
+     - b = j - a20*k/
+     - b = ja20*k/-
+     - bja20*k/-=
+- ||. En cuádruplo en notación posfijo
+
+<center>
+
+Datos objeto | Dato fuente 1 | Datos fuente 2 | Operador 
+--- | --- | --- | ---
+T1 | a | 20 | *
+T2 | T1 | K | /
+T3 | j | T2 | -
+b | b | T3 | =
+
+</center>
+
+2. y = 6 + 2 / 1 + b - 5
+
+      <center>
+
+      Movimientos | Operador | Datos objeto | Dato fuente 
+      --- | --- | --- | ---
+      T1 = 2  | = | T1 | 2
+      T1/1  | / | T1 | 1
+      T2 = 6  | = | T1 | 6
+      T2 + T1  | + | T2 | T1
+      T2 + b  | + | T2 | b
+      T2 - 5  | - | T2 | 5
+      y = T2  | = | y | T2
+
+      </center>
+
+
+**NOTA: el compimilado evalua todoas la líneas de codigo y el interpretado solo cuando detecta el primero error se detiene.**
+
+## cómo representar una asignación en un triplo 
+
+**Nota**: La próxima clase hay que entregar que el tripo ya nos dé un output de un documento .csv con salida o u excel
