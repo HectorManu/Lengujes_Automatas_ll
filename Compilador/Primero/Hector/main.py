@@ -21,6 +21,7 @@ class Ventana:
 
 # En este método nosotros mostramos la tabla
     def datosprimeratabla(self):
+        
         self.master.title('Tabla de símbolos')
 
 
@@ -71,6 +72,8 @@ class Ventana:
         self.imprimirprimeratabla()
 
         self.identificar_errores()
+
+        self.creaciondetriplo()
 
     def identifica_tipos(self):
         arreglo1 = list(self.sinrepeticion)# convierto a lista el conjunto
@@ -506,6 +509,10 @@ class Ventana:
                         self.rellenaerrores('1',self.lineasanalizar[i+1],self.idenlinea((' '+self.lineasanalizar[i+1]+' '+self.lineasanalizar[i+2])),self.idendescripcion(tipo))
                 if tipo == 'indefinida':
                     self.rellenaerrores('1',self.envio,self.idenlinea(self.envio),self.idendescripcion(tipo))
+
+    def creaciondetriplo(self):
+        print(self.arreglosinespacios)
+
 # raiz es nuestro objeto 
 raiz = tk.Tk()
 

@@ -393,3 +393,79 @@ b | b | T3 | =
 ## cómo representar una asignación en un triplo 
 
 **Nota**: La próxima clase hay que entregar que el tripo ya nos dé un output de un documento .csv con salida o u excel
+
+
+## 30/03/2023
+
+Contenido Representación de códogi intermedio (continuación)
+- Instrucción cícica o Repetitiva 
+  - While (cómo funciona si la instrucción es verdadera se repete la insrucción )
+  - MIENSTRAS(condición)
+    - // Instrucción
+  - FINMIENTRAS
+
+generación de código intermedio
+
+### Ejercicios
+
+```
+b = c / 2
+Do 
+  a = a + 1 ;
+  b = a * 2 ;
+FINDO MIENTRAS (a > 10 | b < 20);
+```
+
+ -| Dato objeto | Dato Fuente | Operador
+---|---|---|---
+1 | T1 | c | =
+2 | T1 | 2 | /
+3 | b | T1 | =
+4 | T1 | a | = 
+5 | T1 | 1 | +
+6 | a | T1 | =
+7 | T1 | a | =
+8 | T1 | 2 | *
+9 | b | T1 | =
+10 | T1 | a | =
+11 | T1 | 10 | >
+12 | TR1 | True | 4
+13 | TR2 | False | 14
+14 | T1 | b | =
+15 | T1 | 20 | <
+16 | TR1 | True | 4
+17 | TR1 | False | 15
+18 | --- | --- | ---
+
+
+
+
+```
+par = 0
+MIENTRAS( a % 2 == 0 & a < 20 )
+  par ++
+  a = a + 2
+FIN
+```
+
+-- | Dato objeto | Dato fuente | Operador
+--- | --- | --- | ---
+1 | T1 | 0 | =
+2 | par | T1 | =
+3 | T1 | a | =
+4 | T1 | 2 | %
+5 | T1 | 0 | ==
+6 | TR2 | True | 8
+7 | TR2 | False | 18
+8 | T1 | a | =
+9 | T1 | 20 | <
+10 | TR1 | True | 12
+11 | TR1 | False | 18
+12 | T1 | par | =
+13 | T1 | 1 | +
+14 | par | T1 | =
+15 | T1 | a | =
+16 | T1 | 2 | +
+17 | a | T1 | =
+
+
