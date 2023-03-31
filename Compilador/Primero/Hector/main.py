@@ -72,6 +72,8 @@ class Ventana:
 
         self.identificar_errores()
 
+        self.generatriplos()
+
     def identifica_tipos(self):
         arreglo1 = list(self.sinrepeticion)# convierto a lista el conjunto
         arreglo2 = self.sinvacio1 # variable en la cual iremos identificando los tipos
@@ -161,6 +163,7 @@ class Ventana:
     def identificar_errores(self):
 
         # Arreglos para este metodo
+        
         arreglo = self.arreglosinespacios
         
 
@@ -287,11 +290,6 @@ class Ventana:
                         self.rellenaerrores('1',self.invocacion[i-1],self.idenlinea((' = '+self.invocacion[i-1])),self.idendescripcion('echi'))
                     else:
                         self.rellenaerrores('1',self.invocacion[i-1],self.idenlinea((self.invocacion[i-1]+' '+self.invocacion[i]+' '+self.invocacion[i+1])),self.idendescripcion('indefinida'))
-                else:
-                    if 'ntr' == self.identype(self.invocacion[i+1]):
-                        print('en efecto ')
-                    else:
-                        print('en efecto no existe')
 
         self.identificandoerroresdos()
         self.imprimirlasegundatabla()
@@ -301,10 +299,11 @@ class Ventana:
         # y también se le manda qué es lo que le enviamos cuando 
         # variable = funcion ( variable )
         #             uno       dos
+        # NO HE EVALUADO LOS RETURN
         for i in range(len(self.funcion)):
-            if uno in self.funcion[i]:
+            if uno in self.funcion[i]: # AQUI EVALUAMOS EL NOMBRE DE LA FUNCIÓN
                 # Funcion ( int entrada )
-                entrada = self.funcion[i+3]
+                entrada = self.funcion[i+3] # AQUI EVALUAMOS LA VARIABLE UE ENVIAMOS
                 if self.identype(entrada) == 'ntr':
                     if self.identype(dos ) == 'ntr':
                         return('Es correcto')
@@ -326,6 +325,8 @@ class Ventana:
                         return('echi')
                     else:
                         return('indefinida')
+                else: 
+                    return('indefinida')
 
     def idendescripcion(self,tipo):
         if tipo == 'indefinida':
@@ -506,6 +507,10 @@ class Ventana:
                         self.rellenaerrores('1',self.lineasanalizar[i+1],self.idenlinea((' '+self.lineasanalizar[i+1]+' '+self.lineasanalizar[i+2])),self.idendescripcion(tipo))
                 if tipo == 'indefinida':
                     self.rellenaerrores('1',self.envio,self.idenlinea(self.envio),self.idendescripcion(tipo))
+
+    def generatriplos(self):
+        print(self.arreglosinespacios)
+
 # raiz es nuestro objeto 
 raiz = tk.Tk()
 
