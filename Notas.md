@@ -469,3 +469,55 @@ FIN
 17 | a | T1 | =
 
 
+```Java
+float Operacion (int x, float y)
+{
+  while(x * 6 == y + 7)
+  {
+    y = y +5 -x *a;
+
+  }
+  return y;
+}
+j = Operacion(a,w);
+
+if (j >= 0 && j < 100 ){
+  j = j % a;
+
+}
+
+else
+{
+  j = j % w
+}
+
+```
+-- | Dato objeto | Dato fuente | Operador 
+--- | --- | --- | ---
+1 | 
+
+
+```Java
+x = 1;
+
+if ( x <= 10)
+{
+  y = 10
+  
+  do
+  {
+    res = res + y * x;
+    y--;
+
+  } while ( y > 0 && y <= 10);
+
+}
+
+else 
+{
+  res = 0;
+  x++;
+}
+```
+
+
