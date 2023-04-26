@@ -521,3 +521,64 @@ else
 ```
 
 
+# 25/04/2023
+
+
+## Actividad Optimizr el código 
+
+- Código **original**
+```Java
+do{
+  if(x%2 == 1){
+    b = x + w / 5; // puedo x + w /5
+    z = a * b; // aquí puedo optimizar a * b
+    w = z + b + w / 5 + y;
+    c = a * b / w; // aquí puedo optimizar a * b
+    w2 = x + w / 5; // puedo x + w /5
+    a = w * z + w2; 
+    y = a * b * 1 + a; // aquí puedo optimizar a * b
+  }
+  x = x + 1;
+} while(x <= a + 2);
+
+```
+
+- Lo primero es ver qué es lo que sirve y qué es lo que no estádsiendo utilizado
+- **la primera optimización es ELIMINACIÓN** 
+```Java
+do{
+  if(x%2 == 1){
+    b = x + w / 5; // puedo x + w /5
+    z = a * b; // aquí puedo optimizar a * b
+    w = z + b + w / 5 + y;
+    // c = a * b / w; // ELIMINAMOS 
+    w2 = x + w / 5; // puedo x + w /5
+    a = w * z + w2; 
+    y = a * b * 1 + a; // aquí puedo optimizar a * b
+  }
+  x = x + 1;
+} while(x <= a + 2);
+
+```
+
+- cuando tienes una condición compuesta eone optimizas una variable para hacer la operación antes para solo utilizar variables 
+
+- 
+```Java
+do{
+  if(x%2 == 1){
+    b = x + w / 5; // puedo x + w /5
+    z = a * b; // aquí puedo optimizar a * b
+    w = z + b + w / 5 + y;
+    c = z / w; // aquí puedo optimizar a * b
+    // w2 = b ; // puedo x + w /5
+    a = w * z + b; 
+    y = z * 1 + a; // aquí puedo optimizar a * b
+  }
+  x = x + 1;
+} while(x <= a + 2);
+
+```
+
+
+
