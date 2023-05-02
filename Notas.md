@@ -561,6 +561,57 @@ do{
 
 ```
 
+- cómo quedo 
+
+```Java
+do{
+  if(x%2 == 1){
+    b = x + w / 5; // puedo x + w /5
+    z = a * b; // aquí puedo optimizar a * b
+    w = z + b + w / 5 + y;
+    w2 = x + w / 5; // puedo x + w /5
+    a = w * z + w2; 
+    y = a * b * 1 + a; // aquí puedo optimizar a * b
+  }
+  x = x + 1;
+} while(x <= a + 2);
+
+```
+
+- **Ahora aplicamos otra para optimizar *a x b***
+
+```Java
+do{
+  if(x%2 == 1){
+    b = x + w / 5; // puedo x + w /5
+    z = a * b; // aquí puedo optimizar a * b
+    w = z + b + w / 5 + y;
+    w2 = x + w / 5; // puedo x + w /5
+    a = w * z + w2; 
+    y = a * b * 1 + a; // aquí puedo optimizar a * b
+  }
+  x = x + 1;
+} while(x <= a + 2);
+
+```
+
+**Resultado**
+
+```Java
+do{
+  if(x%2 == 1){
+    b = x + w / 5;
+    z = a * b; 
+    w = z + b + w / 5 + y;
+    w2 = x + w / 5; 
+    a = w * z + w2; 
+    y = z * 1 + a; 
+  }
+  x = x + 1;
+} while(x <= a + 2);
+
+```
+
 - cuando tienes una condición compuesta eone optimizas una variable para hacer la operación antes para solo utilizar variables 
 
 - 
@@ -581,4 +632,57 @@ do{
 ```
 
 
+# 02/05/2023
+
+
+## Tipo de optimización de mirila
+
+```Java
+x = 8 * 7 ; // ELIMINACION POR OPTIMIZACIÓN LOCAL 
+
+
+y = (a + b) * ( a - b);
+
+
+while ( a + b <= c)
+
+{
+
+m = (j + 45)/ 3;
+
+c = a + b / y;
+
+a = par + 3 * 1; // Instrucciones con opereaciones algebraicas reducibles
+
+j = a + b * m;
+
+w = 34 + par + 3; // MÉTODO DE OPTMIZACIÓN LOCAL SE ELIMINA PAR +3
+
+}
+```
+
+- El siguiente código quedaría de esta manera
+
+```Java
+
+
+y = (a + b) * ( a - b);
+
+n = a + b; // Optimización a partir de bucles
+
+while ( n <= c)
+
+{
+
+m = (j + 45)/ 3;
+
+c = a + b / y;
+
+a = par + 3 ;
+
+j = a + b * m;
+
+
+}
+```
 
