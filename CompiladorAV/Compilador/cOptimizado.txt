@@ -1,0 +1,11 @@
+ntr Suma (ntr CHERA, NTR CHFRA){
+  CHOPRA = CHERA = CHFRA;
+  CH_YB_RA = 1451 + 1201;
+  CH_UB_RA = 1451 / 1201;
+  CH_NB_RA = 1451 % 1201;
+  return CHOPRA;
+}
+
+CHARA = 1101;
+CHBRA = 1201;
+CHYRA = Suma (CHARA, CHBRA);
