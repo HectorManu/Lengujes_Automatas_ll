@@ -860,8 +860,8 @@ do{
   if( n == 1){
     b = x + w / 5;
     z = a * b;
-    w =  z + x + w / 5 + y;
-    w2 = x + w / 5 - z;
+    w =  z + b + y;
+    w2 = b - z;
     a = w * z + w2;
     y = z + a;
   }
@@ -879,83 +879,103 @@ do{
 4 | T1 | n | =
 5 | T1 | 1 | ==
 6 | TR1 | True | 8
-7 | TR1 | False | 37
+7 | TR1 | False | 31
 8 | T1 | w | =
 9 | T1 | 5 | /
 10 | T2 | X | =
-11 | T2 | T1 | +
+11 | T2 | T1 | + 
 12 | b | T2 | =
 13 | T1 | a | =
 14 | T1 | b | *
 15 | z | T1 | =
-16 | T1 | w | =
-17 | T1 | 5 | /
-18 | T2 | Z | =
-19 | T2 | X | +
-20 | T2 | T1 | +
-21 | T2 | Y | +
-22 | W | T2 | =
+16 | T1 | z | =
+17 | T1 | b | +
+18 | T1 | y | +
+19 | w | T1 | =
+20 | T1 | b | =
+21 | T1 | z | -
+22 | W2 | T1 | = 
 23 | T1 | W | =
-24 | T1 | 5 | /
-25 | T2 | X | =
+24 | T1 | Z | *
+25 | T2 | W2 | =
 26 | T2 | T1 | +
-27 | T2 | Z | -
-28 | W2 | T2 | = 
-29 | T1 | W | =
-30 | T1 | Z | *
-31 | T2 | W2 | =
-32 | T2 | T1 | +
-33 | a | T2 | =
-34 | T1 | Z | =
-35 | T1 | A | +
-36 | Y | T1 | =
+27 | a | T2 | =
+28 | T1 | z | =
+29 | T1 | a | +
+30 | y | T1 | =
+31 | T1 | X | =
+32 | T1 | 1 | +
+33 | X | T1 | =
+34 | T1 | a | =
+35 | T1 | 2 | +
+36 | r | T1 | =
 37 | T1 | X | =
-38 | T1 | 1 | +
-39 | X | T1 | =
-40 | T1 | a | =
-41 | T1 | 2 | +
-42 | r | T1 | =
-43 | T1 | X | =
-44 | T1 | r | <=
-45 | TR1 | TRUE | 47
-46 | TR1 | FALSE | 51
-47 | T1 | b | =
-48 | T1 | 7 | ==
-49 | TR1 | TRUE | 1
-50 | TR1 | FALSE | 51
-51 | # | # | # 
+38 | T1 | r | <=
+39 | TR1 | TRUE | 41
+40 | TR1 | FALSE | 45
+41 | T1 | b | =
+42 | T1 | 7 | ==
+43 | TR1 | TRUE | 1
+44 | TR1 | FALSE | 45
+45 | # | # | # 
 
 ## Código ensamblador
 ```Assemble
-; 
+ 
 MOV AX, x;
 MOV BL, 2;
 DIV BL;
 MOV n, AH;
 
 MOV AX, n
-MOV BX, 1 
-CMP AX,BX 
+MOV BL, 1 
+CMP AX,BL // PREGUNTAR A LA MAESTRA QUÉ PASA SI ESETA BIEN 
 EQ CASETRUE
 JMP CASEFALSE
 
-MOV AX, W
-MOV BL, 5
-DIV BL
-MOV b, AL
-MOV AX, x
-ADD b,AX
+CASETRUE:
 
-MOV AL,a
-MOV BL,b
-MUL BL
-MOV z,AX
+  MOV AX, W
+  MOV BL, 5
+  DIV BL
+  MOV AX, AL
+  ADD AX,x
+  MOV b,AX
 
-MOV AX,z
-MOV BX,b
-ADD BX,AX
-MOV AX,y
-ADD BX,AX
+  MOV AX,a
+  MUL AX,b
+  MOV z,AX
+
+  MOV AX,z
+  ADD AX,b
+  ADD AX,y
+  MOV w,AX
+
+  MOV AX,b
+  SUB AX,z
+  MOV W2,AX
+
+  MOV AX,W
+  MUL AX,z
+  ADD AX,W2
+  MOV a,AX
+
+  MOV AX,z
+  ADD AX,a
+  MOV y,ax
+
+CASEFALSE:
+
+  MOV AX,x
+  ADD AX,1
+  MOV x,AX
+
+
+
+
+  
+
+CASEFALSE
 
 
 
