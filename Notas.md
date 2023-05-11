@@ -969,6 +969,17 @@ CASEFALSE:
   MOV AX,x
   ADD AX,1
   MOV x,AX
+  
+  MOV AX,a
+  ADD AX,2
+  MOV r,AX
+
+  MOV AX,x
+  COM
+
+
+
+
 
 
 
@@ -983,3 +994,93 @@ CASEFALSE
 
 ```
 
+-- | Dato objeto | Dato fuente | Operador
+--- | --- | --- | ---
+1 | -- | 15 | JMP
+2 | T1 | CHERA | =
+3 | T1 | CHFRA | +
+4 | CHOPRA | T1 | =
+5 | T1 | 1451 | =
+6 | T1 | 1201 | +
+7 | CH_YB_RA | T1 | =
+8 | T1 | 1451 | =
+9 | T1 | 1201 | /
+10 | CH_UB_RA | T1 | =
+11 | T1 | 1451 | =
+12 | T1 | 1201 | %
+13 | CH_NB_RA | T1 | =
+14 | -- | 24 | JMP
+15 | T1 | 1101 | =
+16 | CHARA | T1 | =
+17 | T1 | 1201 | =
+18 | CHBRA | T1 | =
+19 | T1 | CHARA | =
+20 | CHERA | T1 | =
+21 | T1 | CHBRA | =
+22 | CHFRA | T1 | =
+23 | -- | 2 | JMP
+24 | T1 | CHOPRA | =
+25 |CHYRA | T1 | =
+
+
+```Assamble
+JMP RENGLON15
+RENGLON2:
+MOV AX,CHERA
+ADD AX,CHFRA
+MOV CHOPRA, AX
+
+JMP RENGLON24
+
+JMP RENGLON2
+RENGLON24:
+
+ MOV AX,CHOPRA
+ MOV CHYRA,AX
+
+
+
+```
+
+# Importar bibliotecas necesarias
+import pandas as pd
+import numpy as np
+from sklearn.svm import SVR
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score
+
+# Leer los datos en un DataFrame
+data = pd.read_csv('nombre_del_archivo.csv')
+
+# Seleccionar las variables predictoras
+X = data[['entidad', 'lluvia', 'temperatura', 'anio']]
+
+# Seleccionar la variable a predecir
+y = data['producción']
+
+# Dividir los datos en conjunto de entrenamiento y conjunto de prueba
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# Crear un modelo SVM no lineal
+model = SVR(kernel='rbf')
+
+# Entrenar el modelo con el conjunto de entrenamiento
+model.fit(X_train, y_train)
+
+# Predecir la variable 'producción' con el conjunto de prueba
+y_pred = model.predict(X_test)
+
+# Calcular el rendimiento del modelo
+score = model.score(X_test, y_test)
+r2 = r2_score(y_test, y_pred)
+
+# Crear una gráfica con los datos predecidos y los datos de entrenamiento
+import matplotlib.pyplot as plt
+
+plt.scatter(y_train, model.predict(X_train), c='blue', label='Datos de entrenamiento')
+plt.scatter(y_test, y_pred, c='red', label='Datos predecidos')
+plt.xlabel('Valores reales')
+plt.ylabel('Valores predecidos')
+plt.title('Predicción de la producción con SVM no lineal')
+plt.legend()
+plt.show()
