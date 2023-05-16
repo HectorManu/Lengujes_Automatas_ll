@@ -3,6 +3,7 @@ from Tabla_Lexemas import *
 from Tabla_Errores import *
 from Triplos import *
 from OptimizarCodigo import *
+from Ensabamblador import *
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
@@ -78,11 +79,11 @@ class Ventana():
       tabla3.insert("", END, text=linea, values=(dtoObjetivo,dtoFuente,operador))
     tabla3.pack(fill=tk.BOTH, expand=True)
 
-#Clase Lectura
+#5 Clase Lectura
 codigo = Lectura("Codigo2.txt")
 codigo.leer_archivo()
 
-#Clase OptimizarCodigo
+#5 Clase OptimizarCodigo
 optimizar = OptimizarCodigo(codigo.por_filas)
 optimizar.recorrerCodigo()
 if optimizar.validar == FALSE:
@@ -92,19 +93,29 @@ else:
   codigo = Lectura("cOptimizado.txt")
   codigo.leer_archivo()
 
-#Clase Tabla_Lexemas
+por_filasCopia = []
+for i in codigo.por_filas:
+  por_filasCopia.append(i)
+
+
+#5 Clase Tabla_Lexemas
 T_lexemas = Tabla_Lexemas(codigo.por_cadenas)
 T_lexemas.recorrer_archivo()
 
-#Clase Tabla_Errores
+#5 Clase Tabla_Errores
 T_errores = Tabla_Errores(codigo.por_filas,T_lexemas.column_lexemas, T_lexemas.column_tipos)
 T_errores.recorrerCodigo()
 
-#Clase Triplos
+#5 Clase Triplos
 Triplo = Triplos(codigo.por_filas)
 Triplo.recorrer_codigo()
 
-#Clase ventana
+#5 Clase Ensamblador
+ensamblador = Ensabamblador(por_filasCopia, Triplo.saltoFuncion, Triplo.saltoLLamadaFuncion, Triplo.saltoReturn,Triplo.argumentos)
+ensamblador.recorrerCodigo()
+
+
+#5 Clase ventana
 ventana1 = tk.Tk()
 tablas = Ventana(ventana1,T_lexemas.column_lexemas,T_lexemas.column_tipos, T_errores.tabla, Triplo.triplo)
 ventana1.mainloop()

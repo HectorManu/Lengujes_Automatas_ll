@@ -104,8 +104,10 @@ class Triplos():
           self.tupla = (str(self.linea),"",self.inicioFuncion,"JMP")
           self.triplo.append(self.tupla)
           self.linea += 1
+          self.saltoLLamadaFuncion = self.inicioFuncion
 
           self.triplo[self.filaIndice] = (self.lineaFunc,"",str(self.linea),"JMP")
+          self.saltoReturn = str(self.linea) #jmp
 
           self.tupla = (str(self.linea),"T1",self.valorRetorno,"=")
           self.triplo.append(self.tupla)
@@ -162,6 +164,7 @@ class Triplos():
         self.valorRetorno = self.fila[-1]
 
         self.triplo[self.filaIndice] = (self.lineaFunc,"",str(self.linea + 1),"JMP")
+        self.saltoFuncion = str(self.linea + 1) #JMP
 
         self.tupla = (str(self.linea),"","","JMP")
         self.triplo.append(self.tupla)
