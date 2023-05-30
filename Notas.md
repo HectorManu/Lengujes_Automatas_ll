@@ -440,7 +440,7 @@ FINDO MIENTRAS (a > 10 | b < 20);
 
 
 
-```
+```Java
 par = 0
 MIENTRAS( a % 2 == 0 & a < 20 )
   par ++
@@ -975,7 +975,7 @@ CASEFALSE:
   MOV r,AX
 
   MOV AX,x
-  COM
+  CPM
 
 
 
@@ -1037,50 +1037,189 @@ RENGLON24:
 
  MOV AX,CHOPRA
  MOV CHYRA,AX
+```
 
+# Cuestionario de ensamblador 
+
+**Instrucciones**: Obtener el código ensamblador del siguiente código y después contestar el cuestionario.
+
+```Java
+par = 0;
+
+impar = 0;
+
+for ( x = 1; x <= 6; x++)
+
+{
+
+if( x % 2 == 0)
+
+par++;
+
+else
+
+impar++;
+
+}
+```
+
+MOV PAR,0 
+MOV IMPAR,0 
+MOV AX,1
+MOV X,AX
+CMP AX,6
+LE ETIQUETAVERDADEROFOR
+JMP ETIQUETAFALSOFOR
+
+ETIQUETAVERDADERO
+  MOV AX,X
+  MOV BL,2
+  DIV BL
+  MOV X,AH
+  CMP AX,0
+  EQ ETIQUETAVERDADEROIF
+  JMP ETIQUETAFALSOIF
+  ETIQUETAVEDADEROIF
+    MOV AX,PAR
+    ADD AX,1
+
+  ETIQUETAFALSOIF
+
+ETIQUETAFALSOFOR
+
+
+
+
+# Examen
+
+```Java
+int Funcion (float x , int w )
+
+{
+
+   int i ;
+
+   i = 0 ;
+
+     do
+
+     {
+
+          w  = w + i % x ;
+
+         i ++;
+
+     } while ( i <= 10 && i >= 0 );
+
+   return w;
+
+}
+
+j = Funcion (3.1 , 20 );
+```
+
+Ensamblador 
+```Assamble
+JMP FINDEFUNCION
+
+INICIOFUNCION
+  MOV AX,0
+  MOV i,AX
+
+  INICIODO
+    MOV AX,i
+    MOV BL,x
+    DIV BL
+    MOV w,AH
+    MOV AX,w
+    ADD AX,w
+    MOV w,AX
+    
+    MOV AX,i
+    ADD AX,1
+    MOV i,AX
+
+    MOV AX,10
+    CMP AX,i
+    JLE TRUEPRIMERAETIQUETAWHILE
+    JMP FALSESEGUNDAETIQUETAWHILE
+    
+    TRUEPRIMERAETIQUETAWHILE
+    
+      MOV AX,0
+      CMP AX,i
+      JGE INICIODO
+      JMP FALSESEGUNDAETIQUETAWHILE
+
+
+    FALSESEGUNDAETIQUETAWHILE
+      JMP RETORNODEFUNCION
+
+
+FINDEFUNCION
+
+  MOV AX,3.1
+  MOV x,AX
+  MOV AX,20
+  MOV w,AX
+  JMP INICIOFUNCION
+
+RETORNODEFUNCION
+  MOV AX,w
+  MOV j,AX
 
 
 ```
 
-# Importar bibliotecas necesarias
-import pandas as pd
-import numpy as np
-from sklearn.svm import SVR
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import r2_score
 
-# Leer los datos en un DataFrame
-data = pd.read_csv('nombre_del_archivo.csv')
+## Optimice el siguiente código de alto nivel.
 
-# Seleccionar las variables predictoras
-X = data[['entidad', 'lluvia', 'temperatura', 'anio']]
+```Java
+for ( x = 10; x >=y+6; x--)
 
-# Seleccionar la variable a predecir
-y = data['producción']
+{
 
-# Dividir los datos en conjunto de entrenamiento y conjunto de prueba
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+  g = 1;
 
-# Crear un modelo SVM no lineal
-model = SVR(kernel='rbf')
+   do
 
-# Entrenar el modelo con el conjunto de entrenamiento
-model.fit(X_train, y_train)
+   {
 
-# Predecir la variable 'producción' con el conjunto de prueba
-y_pred = model.predict(X_test)
+      otro = x + y % g * res;
 
-# Calcular el rendimiento del modelo
-score = model.score(X_test, y_test)
-r2 = r2_score(y_test, y_pred)
+         res = x * y / otro ;
 
-# Crear una gráfica con los datos predecidos y los datos de entrenamiento
-import matplotlib.pyplot as plt
+        y ++; 
 
-plt.scatter(y_train, model.predict(X_train), c='blue', label='Datos de entrenamiento')
-plt.scatter(y_test, y_pred, c='red', label='Datos predecidos')
-plt.xlabel('Valores reales')
-plt.ylabel('Valores predecidos')
-plt.title('Predicción de la producción con SVM no lineal')
-plt.legend()
-plt.show()
+ } while ( y + 6  != x / 4);
+
+}
+
+```
+
+## Suponga que el compilador recibe de entrada el siguiente código fuente.
+
+
+```Java
+a = 9;
+
+while(a > = 0)
+
+{
+
+    for ( b = a;  b <=10; b++)
+
+   {
+
+         res = b % 3;
+
+        if (res == 0)
+
+               multiplo ++;
+
+    }
+
+ a--;
+
+}
+```

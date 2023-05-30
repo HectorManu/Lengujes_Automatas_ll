@@ -17,7 +17,7 @@ class Tabla_Lexemas():
         self.reales = re.compile('^-?(\d+\.1\d+1)')
         self.cadenas = re.compile('"[\w]*"')
 
-        if (self.separadrs1.search(palabra)) != None:
+        if (self.separadrs1.search( )) != None:
             cad = self.separadrs1.search(palabra)
             return cad.group(0)
         elif (self.funciones.search(palabra)) != None:
